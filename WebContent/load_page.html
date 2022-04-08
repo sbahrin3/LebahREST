@@ -1,0 +1,44 @@
+<html>
+
+<body>
+
+<div id="content"></div>
+
+<button type="button" onclick="loadPage1()">Load Page 1</button>
+</body>
+
+<script>
+
+function loadPage1 (e) {
+    (e || window.event).preventDefault();
+
+    fetch("http://localhost:8181/my-rest/page1.html" /*, options */)
+    .then((response) => response.text())
+    .then((html) => {
+        document.getElementById("content").innerHTML = html;
+        var scripts = document.getElementById("content").querySelectorAll("script");
+        for (var i = 0; i < scripts.length; i++) {
+          if (scripts[i].innerText) {
+            eval(scripts[i].innerText);
+          } else {
+            fetch(scripts[i].src).then(function (data) {
+              data.text().then(function (r) {
+                eval(r);
+              })
+            });
+
+          }
+          // To not repeat the element
+          scripts[i].parentNode.removeChild(scripts[i]);
+        }
+    })
+    .catch((error) => {
+        console.warn(error);
+    });
+} 
+
+
+</script>
+
+
+</html>

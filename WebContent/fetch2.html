@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div id="demo"></div>
+
+</body>
+<script>
+
+async function getJSON() {
+	const object = { Message: 'Flalsh Gordon' };
+	let response = await fetch('http://localhost:8181/my-rest/api/lebah/example/test', {
+		method: 'POST',
+	    body: JSON.stringify(object)
+	});
+	let data = await response.json();
+	return data;
+}
+getJSON().then(data => {
+	console.log(data);
+	document.getElementById('demo').innerHTML = data.message;
+	}
+);
+</script>
+
+</html>
