@@ -30,7 +30,8 @@ public abstract class Base implements RestServlet {
 		String serverName = req.getServerName();
 		int serverPort = req.getServerPort();
         String server = serverPort != 80 ? serverName + ":" + serverPort : serverName;
-        String serverUrl = "http://" + server;		
+        String http = req.getRequestURL().toString().substring(0, req.getRequestURL().toString().indexOf("://") + 3);
+        String serverUrl = http + server;		
 		String uri = req.getRequestURI();
 		String s1 = uri.substring(1);
 		String appName = s1.substring(0, s1.indexOf("/"));
